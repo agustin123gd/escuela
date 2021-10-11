@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<mapper namespace="Facultad">
+    <select id="getAllFacultades" resultType="pojo.Facultad">
+        select * from facultad
+    </select>
+    
+    <select id="getFacultadById" resultType="pojo.Facultad" parameterType="int">
+        select * from facultad where idFacultad = #{id}
+    </select>
+    
+    <insert id="registrarFacultad" parameterType="pojo.Facultad">
+        INSERT INTO facultad (nombre) VALUES (#{nombre})
+    </insert>
+    
+    <update id="actualizarFacultad" parameterType="map">
+        UPDATE facultad SET nombre = #{nombre}
+        WHERE idFacultad =#{idFacultad}
+    </update>
+    
+    <delete id="eliminarFacultad" parameterType="int">
+        DELETE FROM Facultad WHERE idFacultad = #{idFacultad}
+    </delete>
+</mapper>

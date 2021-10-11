@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Carrera">
+    <select id="getAllCarreras" resultType="pojo.Carrera">
+        select * from carrera
+    </select>
+    
+    <select id="getCarreraById" resultType="pojo.Carrera" parameterType="int">
+        select * from carrera where idCarrera = #{id}
+    </select>
+    
+    <insert id="registrarCarrera" parameterType="pojo.Carrera">
+        INSERT INTO carrera (nombre, codigo, idFacultad) 
+        VALUES (#{nombre}, #{codigo}, #{idFacultad})
+    </insert>
+    
+    <update id="actualizarcarrera" parameterType="map">
+        UPDATE carrera SET nombre = #{nombre}, codigo = #{codigo}, idFacultad = #{idFacultad}
+        WHERE idCarrera =#{idCarrera}
+    </update>
+    
+    <delete id="eliminarCarrera" parameterType="int">
+        DELETE FROM carrera WHERE idCarrera = #{idCarrera}
+    </delete>
+    
+</mapper>

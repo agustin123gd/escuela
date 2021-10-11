@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Usuario">
+    <select id="getAllUsuarios" resultType="pojo.Usuario">
+        select * from usuario
+    </select>
+    
+    <select id="getUsuarioById" resultType="pojo.Usuario" parameterType="int">
+        select * from usuario where idUsuario = #{id}
+    </select>
+    
+    <insert id="registrarUsuario" parameterType="pojo.Usuario">
+        INSERT INTO usuario (nombre, username, password) 
+        VALUES (#{nombre}, #{username}, #{password})
+    </insert>
+    
+    <update id="actualizarUsuario" parameterType="map">
+        UPDATE usuario SET nombre = #{nombre}, password = #{password}
+        WHERE idUsuario =#{idUsuario}
+    </update>
+    
+    <delete id="eliminarUsuario" parameterType="int">
+        DELETE FROM usuario WHERE idUsuario = #{idUsuario}
+    </delete>
+    
+</mapper>
