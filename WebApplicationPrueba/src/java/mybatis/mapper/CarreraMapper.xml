@@ -12,6 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from carrera where idCarrera = #{id}
     </select>
     
+    <select id="getCarreraByFacultad" resultType="pojo.Carrera" parameterType="int">
+        select * from carrera where idFacultad = #{id}
+    </select>
+    
     <insert id="registrarCarrera" parameterType="pojo.Carrera">
         INSERT INTO carrera (nombre, codigo, idFacultad) 
         VALUES (#{nombre}, #{codigo}, #{idFacultad})

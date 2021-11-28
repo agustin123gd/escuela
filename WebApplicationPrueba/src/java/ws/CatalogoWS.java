@@ -165,5 +165,34 @@ public class CatalogoWS {
         }
         return mensaje;
     }
+    
+    @Path("login")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje loginUsuario(@FormParam("username") String username,
+                                   @FormParam("contraseña") String password){
+        Mensaje mensaje= null;
+        HashMap<String, Object> parametros = new HashMap<>();
+        parametros.put("username", username);
+        parametros.put("password",password);
+        SqlSession conn= MyBatisUtil.getSession();
+        if(conn !=null){
+            try{
+                Usuario userbd = conn.selectOne("Usuario.loginUsuario", parametros);
+                if(userbd != null && userbd.getIdUsuario() > 0){
+                    mensaje = new Mensaje(userbd.getNombre(),false);
+                }else{
+                    mensaje = new Mensaje("Usuario y/o contraseña incorrectos.",false);
+                }
+            }catch(Exception e){
+                mensaje = new Mensaje("Error " + e.getMessage(),true);
+            }finally{
+                conn.close();
+            }
+        }else{
+            mensaje = new Mensaje("Por el momento no hay coneccion con la BD",true);
+        }    
+        return mensaje;
+    }
 }
 

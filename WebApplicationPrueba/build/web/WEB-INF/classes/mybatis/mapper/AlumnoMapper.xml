@@ -5,29 +5,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="Alumno">
     <select id="getAllAlumnos" resultType="pojo.Alumno">
-        {CALL alumno.sp_getAlumnos}
+        select * from alumno
     </select>
     
-    <select id="getAlumnoById" resultType="pojo.Alumno">
-        {CALL alumno.sp_getAlumnoById (#{idAlumno,jdbcType=INTEGER,mode=in})}
+    <select id="getAlumnoById" resultType="pojo.Alumno" parameterType="int">
+        select * from alumno where idAlumno = #{id}
+
     </select>
     
     <insert id="registrarAlumno" parameterType="pojo.Alumno">
-        {CALL alumno.sp_registrarAlumno(#{nombre,jdbcType=VARCHAR,mode=in}, 
-        #{apellidos,jdbcType=VARCHAR,mode=in}, 
-        #{matricula,jdbcType=VARCHAR,mode=in}
-        #{email,jdbcType=VARCHAR,mode=in,
-        #{idCarrera,jdbcType=INTEGER,mode=in})}
+        INSERT INTO alumno (nombre, apellidos, matricula, email, idCarrera) 
+        VALUES (#{nombre}, #{apellidos}, #{matricula}, #{email}, #{idCarrera})
     </insert>
     
     <update id="actualizarAlumno" parameterType="map">
-        {CALL alumno.sp_actualizarAlumno (#{idAlumno,jdbcType=INTEGER,mode=in}
-        #{nombre,jdbcType=VARCHAR,mode=in}, 
-        #{apellidos,jdbcType=VARCHAR,mode=in})}
+        UPDATE alumno SET nombre = #{nombre}, apellidos = #{apellidos}
+        WHERE idAlumno =#{idAlumno}
 
     </update>
     
     <delete id="eliminarAlumno" parameterType="int">
-        {CALL alumno.sp_actualizarAlumno (#{idAlumno,jdbcType=INTEGER,mode=in})}
+        DELETE FROM alumno WHERE idAlumno = #{idAlumno}
     </delete>
 </mapper>

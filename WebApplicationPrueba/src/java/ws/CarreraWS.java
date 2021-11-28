@@ -76,6 +76,24 @@ public class CarreraWS {
         }
         return carrera;
     }
+    
+    @Path("byFacultad/{idFacultad}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Carrera getCarreraByFacultad(@PathParam("idFacultad")Integer idFacultad){
+        Carrera carrera = null;
+        SqlSession conn= MyBatisUtil.getSession();
+        if(conn !=null){
+            try{
+                carrera = conn.selectOne("Carrera.getCarreraByFacultad", idFacultad);
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conn.close();
+            }            
+        }
+        return carrera;
+    }
 
     @Path("registrar")
     @POST

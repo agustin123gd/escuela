@@ -2,6 +2,11 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 
 <mapper namespace="Usuario">
     <select id="getAllUsuarios" resultType="pojo.Usuario">
@@ -25,5 +30,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="eliminarUsuario" parameterType="int">
         DELETE FROM usuario WHERE idUsuario = #{idUsuario}
     </delete>
+    
+    <select id="loginUsuario" resulType="pojo.Usuario" parameterType="map">
+        SELECT * FROM usuario WHERE username = #{username} AND password = #{password}
+    </select>
     
 </mapper>
