@@ -13,7 +13,8 @@ from FuncionesVoz import tts
 
 
 class voz(QMainWindow):
-
+    cont=0
+ 
     def __init__(self):
         super(voz,self).__init__()
         loadUi("UIVoz.ui", self)
@@ -26,44 +27,21 @@ class voz(QMainWindow):
         self.btnPausar.setEnabled(False)
         self.btnReproducir.setEnabled(False)
 
-    def controlVoz():
-        with sr.Microphone() as source:
-            print("Te estoy escuchando...")
-            r = sr.Recognizer()	
-            audio = r.listen(source)
-            try:
-                opcion = r.recognize_google(audio, language = 'es-ES')
-                print('Tú dijiste: {}'.format(opcion))
-                if opcion == "pausa":
-                    self.pausar()
-                elif opcion == "reproducir":
-                    self.reproducir()
-                elif opcion == "fin": 
-                    mixer.music.stop()
-                elif opcion == "siguiente":
-                    mixer.stop()
-                    #texto=str(input("Selecciona la texto: "))
-                    #tts(texto,'es','audio_prueba.mp3')
-                    #mixer.music.load('audio_prueba.mp3')
-                    #mixer.music.play()
-                else:
-                    print('Error, tú dijiste: {}'.format(opcion))
-            except:
-                print("no fue posible")
-
     def cargarArchivo(self):
-        fname=QFileDialog.getOpenFileName(self, 'Open file', 'C:\\Users', 'Texto (*.pdf, *.txt)')
+        fname=QFileDialog.getOpenFileName(self, 'Open file', 'C:\\Users', 'Texto (*.pdf *.txt)')
         self.nombreArchivo.setText(fname[0])
-        tts(fname[0],'es','audio_prueba.mp3')
+        tts(fname[0],'es','audio.mp3')
         self.btnLeer.setEnabled(True)
+        self.cont=0
     
     def leer(self):
         mixer.init()
-        mixer.music.load('audio_prueba.mp3')
+        mixer.music.load('audio.mp3')
         mixer.music.play()   
         self.btnPausar.setEnabled(True)
         self.btnLeer.setEnabled(False)
-        while True:
+        self.abriArchivo.setEnabled(False)
+        while self.cont == 0:
             r = sr.Recognizer()	
             with sr.Microphone() as source:
                 print("Te estoy escuchando...")
@@ -75,14 +53,8 @@ class voz(QMainWindow):
                         self.pausar()
                     elif opcion == "reproducir":
                         self.reproducir()
-                    elif opcion == "fin": 
-                        mixer.music.stop()
-                    elif opcion == "siguiente":
-                        mixer.stop()
-                        #texto=str(input("Selecciona la texto: "))
-                        #tts(texto,'es','audio_prueba.mp3')
-                        #mixer.music.load('audio_prueba.mp3')
-                        #mixer.music.play()
+                    elif opcion == "terminar": 
+                        self.terminar()
                     else:
                         print('Error, tú dijiste: {}'.format(opcion))
                 except:
@@ -98,8 +70,14 @@ class voz(QMainWindow):
         mixer.music.unpause()
         self.btnPausar.setEnabled(True)
         self.btnReproducir.setEnabled(False)
+    
+    def terminar(self):
+        mixer.music.stop()
+        self.abriArchivo.setEnable(True)
+        self.cont=1
 
 app = QApplication(sys.argv)
 GUI = voz()
 GUI.show()
 sys.exit(app.exec_())
+
