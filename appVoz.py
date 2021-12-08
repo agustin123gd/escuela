@@ -7,6 +7,7 @@ import speech_recognition as sr
 from gtts import gTTS 
 from playsound import playsound
 from pygame import mixer
+from os import remove
 
 from FuncionesVoz import tts
 
@@ -79,6 +80,8 @@ class voz(QMainWindow):
         mixer.music.stop()
         self.abriArchivo.setEnabled(True)
         self.btnTerminar.setEnabled(False)
+        remove('audio.mp3')
+        self.nombreArchivo.setText('')
         self.cont=1
 
 app = QApplication(sys.argv)
