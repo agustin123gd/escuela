@@ -13,14 +13,20 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="iconSize">
+   <size>
+    <width>50</width>
+    <height>50</height>
+   </size>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="abriArchivo">
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>10</y>
-      <width>21</width>
-      <height>21</height>
+      <y>0</y>
+      <width>31</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -28,7 +34,13 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>png-transparent-directory-computer-icons-responsive-rectangle-black-file-folders.png</normaloff>png-transparent-directory-computer-icons-responsive-rectangle-black-file-folders.png</iconset>
+      <normaloff>file.png</normaloff>file.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="inicio">
@@ -127,6 +139,29 @@
     </property>
     <property name="text">
      <string>Terminar</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnMicro">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>230</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>abierto.png</normaloff>abierto.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
     </property>
    </widget>
   </widget>
