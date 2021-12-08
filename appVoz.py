@@ -22,10 +22,13 @@ class voz(QMainWindow):
         self.btnLeer.clicked.connect(self.leer)
         self.btnPausar.clicked.connect(self.pausar)
         self.btnReproducir.clicked.connect(self.reproducir)
+        self.btnTerminar.clicked.connect(self.terminar)
 
         self.btnLeer.setEnabled(False)
         self.btnPausar.setEnabled(False)
         self.btnReproducir.setEnabled(False)
+        self.btnTerminar.setEnabled(False)
+
 
     def cargarArchivo(self):
         fname=QFileDialog.getOpenFileName(self, 'Open file', 'C:\\Users', 'Texto (*.pdf *.txt)')
@@ -39,6 +42,7 @@ class voz(QMainWindow):
         mixer.music.load('audio.mp3')
         mixer.music.play()   
         self.btnPausar.setEnabled(True)
+        self.btnTerminar.setEnabled(True)
         self.btnLeer.setEnabled(False)
         self.abriArchivo.setEnabled(False)
         while self.cont == 0:
@@ -73,11 +77,11 @@ class voz(QMainWindow):
     
     def terminar(self):
         mixer.music.stop()
-        self.abriArchivo.setEnable(True)
+        self.abriArchivo.setEnabled(True)
+        self.btnTerminar.setEnabled(False)
         self.cont=1
 
 app = QApplication(sys.argv)
 GUI = voz()
 GUI.show()
 sys.exit(app.exec_())
-
