@@ -8,7 +8,7 @@ from gtts import gTTS
 from playsound import playsound
 from pygame import mixer
 
-from FuncionesVoz import controlVoz, tts
+from FuncionesVoz import tts
 
 
 
@@ -26,8 +26,30 @@ class voz(QMainWindow):
         self.btnPausar.setEnabled(False)
         self.btnReproducir.setEnabled(False)
 
-        controlVoz
-
+    def controlVoz():
+        with sr.Microphone() as source:
+            print("Te estoy escuchando...")
+            r = sr.Recognizer()	
+            audio = r.listen(source)
+            try:
+                opcion = r.recognize_google(audio, language = 'es-ES')
+                print('Tú dijiste: {}'.format(opcion))
+                if opcion == "pausa":
+                    self.pausar()
+                elif opcion == "reproducir":
+                    self.reproducir()
+                elif opcion == "fin": 
+                    mixer.music.stop()
+                elif opcion == "siguiente":
+                    mixer.stop()
+                    #texto=str(input("Selecciona la texto: "))
+                    #tts(texto,'es','audio_prueba.mp3')
+                    #mixer.music.load('audio_prueba.mp3')
+                    #mixer.music.play()
+                else:
+                    print('Error, tú dijiste: {}'.format(opcion))
+            except:
+                print("no fue posible")
 
     def cargarArchivo(self):
         fname=QFileDialog.getOpenFileName(self, 'Open file', 'C:\\Users', 'Texto (*.pdf, *.txt)')
@@ -38,10 +60,33 @@ class voz(QMainWindow):
     def leer(self):
         mixer.init()
         mixer.music.load('audio_prueba.mp3')
-        mixer.music.play()
+        mixer.music.play()   
         self.btnPausar.setEnabled(True)
         self.btnLeer.setEnabled(False)
-
+        while True:
+            r = sr.Recognizer()	
+            with sr.Microphone() as source:
+                print("Te estoy escuchando...")
+                audio = r.listen(source)
+                try:
+                    opcion = r.recognize_google(audio, language = 'es-ES')
+                    print('Tú dijiste: {}'.format(opcion))
+                    if opcion == "pausa":
+                        self.pausar()
+                    elif opcion == "reproducir":
+                        self.reproducir()
+                    elif opcion == "fin": 
+                        mixer.music.stop()
+                    elif opcion == "siguiente":
+                        mixer.stop()
+                        #texto=str(input("Selecciona la texto: "))
+                        #tts(texto,'es','audio_prueba.mp3')
+                        #mixer.music.load('audio_prueba.mp3')
+                        #mixer.music.play()
+                    else:
+                        print('Error, tú dijiste: {}'.format(opcion))
+                except:
+                    print("no fue posible")
 
     def pausar(self):
         mixer.music.pause()
@@ -58,4 +103,3 @@ app = QApplication(sys.argv)
 GUI = voz()
 GUI.show()
 sys.exit(app.exec_())
-
